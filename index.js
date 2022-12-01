@@ -8,23 +8,41 @@ canvas.height = 576;
 c.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.5;
 
+const background = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  imageSrc: './img/background.png',
+});
+
 // Posição do sprite do Player
 const player = new Fighter({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
+  imageSrc: './img/characters/samurai/Idle.png',
+  framesMax: 8,
+  scale: 1,
+  offset: {
+    x: 215,
+    y: 150,
+  },
+  sprites: {
+    idle: { imageSrc: './img/characters/samurai/Idle.png', framesMax: 8 },
+    run: { imageSrc: './img/characters/samurai/Run.png', framesMax: 8 },
+    jump: { imageSrc: './img/characters/samurai/Jump.png', framesMax: 2 },
+    attack: { imageSrc: './img/characters/samurai/Attack1.png', framesMax: 6 },
+  },
 });
 
-player.draw();
-
-// Posição do sprite do Inimigo
+// // Posição do sprite do Player 2
 const enemy = new Fighter({
   position: { x: 400, y: 100 },
   velocity: { x: 0, y: 0 },
   color: 'blue',
   offset: { x: -50, y: 0 },
 });
-enemy.draw();
 
 const key = {
   a: {
@@ -41,50 +59,15 @@ const key = {
   },
 };
 
-// Função para mapear ataques
-function rectangularCollision({ rectangle1, rectangle2 }) {
-  return (
-    rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
-    rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
-    rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-    rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
-  );
-}
-
-function determineWinner({ player, enemy, timerId }) {
-  clearTimeout(timerId);
-  document.querySelector('#displayText').style.display = 'flex';
-  if (player.health === enemy.health) {
-    document.querySelector('#displayText').innerHTML = 'Empate';
-  } else if (player.health > enemy.health) {
-    document.querySelector('#displayText').innerHTML = 'Player 1 venceu!';
-  } else if (enemy.health > player.health) {
-    document.querySelector('#displayText').innerHTML = 'Player 2 venceu!';
-  }
-}
-
-let timer = 60;
-let timerId;
-function decreaseTimer() {
-  if (timer > 0) {
-    timerId = setTimeout(decreaseTimer, 1000);
-    timer--;
-    document.querySelector('#timer').innerHTML = timer;
-  }
-
-  if (timer === 0) {
-    determineWinner({ player, enemy, timerId });
-  }
-}
-
 decreaseTimer();
 // Parametros para animação
 function animate() {
   window.requestAnimationFrame(animate);
   c.fillStyle = 'black';
   c.fillRect(0, 0, canvas.width, canvas.height);
+  background.update();
   player.update();
-  enemy.update();
+  // enemy.update();
 
   player.velocity.x = 0;
   enemy.velocity.x = 0;
