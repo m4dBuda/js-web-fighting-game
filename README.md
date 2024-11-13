@@ -4,8 +4,8 @@ Browser Fighting Game that I created for fun because I had nothing more interest
 ## Roadmap
 List of features I want to add:
 - Pixel art video for game opening.
-- Home Screen with Single Player and Multiplayer options available. 
-- Hero screen selector with at least 10 differente heros.
+- Home Screen with Single-Player and Multi-Player options available. 
+- Hero screen selector with at least 10 different heros.
 - More maps where we'll have exclusive features and interactions with the enviroment.
 - AI to make it possible to play a single-player campaign.
 - Campaign with final boss and pixel art video ending.
